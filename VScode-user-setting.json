@@ -1,0 +1,30 @@
+{
+    "workbench.colorTheme": "Solarized Dark",
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.cursorStyle": "line",
+    "editor.fontSize": 16,
+    "editor.lineHeight": 24,
+    "editor.lineNumbers": "on",
+    "editor.minimap.enabled": false,
+    "editor.renderIndentGuides": false,
+    "editor.rulers": [120],
+    "workbench.iconTheme": "vscode-great-icons",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": true,
+        "strings": true
+    },
+    "java.home": "C:\\Program Files\\Java\\jdk1.8.0_181",
+    "maven.executable.path": "F:\\software\\maven-3.5.4\\bin\\mvn",
+    "java.configuration.maven.userSettings": "F:\\software\\maven-3.5.4\\conf\\settings.xml",
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable":"JAVA_HOME",
+            "value": "C:\\Program Files\\Java\\jdk1.8.0_181"
+        }
+    ],
+    "jetbrainsKeymap.promptV3Features": true,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.formatOnPaste": true
+}
