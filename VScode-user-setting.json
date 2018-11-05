@@ -2,7 +2,6 @@
     "workbench.colorTheme": "Solarized Dark",
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
-    "editor.cursorStyle": "line",
     "editor.fontSize": 16,
     "editor.lineHeight": 24,
     "editor.lineNumbers": "on",
@@ -25,6 +24,8 @@
         }
     ],
     "jetbrainsKeymap.promptV3Features": true,
-    "editor.multiCursorModifier": "ctrlCmd",
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": true,
+    "files.autoGuessEncoding": true,
+    "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"C:\\Users\\Administrator\\.vscode\\extensions\\gabrielbb.vscode-lombok-0.9.6/server/lombok.jar\" -Xbootclasspath/a:\"C:\\Users\\Administrator\\.vscode\\extensions\\gabrielbb.vscode-lombok-0.9.6/server/lombok.jar\"",
+    "editor.multiCursorModifier": "alt"
 }
