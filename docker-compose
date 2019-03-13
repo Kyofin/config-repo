@@ -1,0 +1,259 @@
+version: '3'
+services:
+  dhq-monitor:
+    image: ebs/app
+    container_name: dhq-monitor
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6859:6859
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-monitor-service:/tomcat
+      - ./ebs-monitor-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-hystrix:
+    image: ebs/app
+    container_name: dhq-hystrix
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6855:6855
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-hystrix-service:/tomcat
+      - ./ebs-hystrix-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-sleuth:
+    image: ebs/app
+    container_name: dhq-sleuth
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6858:6858
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --zipkin.storage.elasticsearch.hosts=192.168.110.85:9300  --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-sleuth-service:/tomcat
+      - ./ebs-sleuth-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-config:
+    image: ebs/app
+    container_name: dhq-config
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6853:6853
+    environment:
+      APP_OPTS: --spring.profiles.active=git --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-config-service:/tomcat
+      - ./ebs-config-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-register:
+    image: ebs/app
+    container_name: dhq-register
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6851:6851
+    environment:
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-register-service:/tomcat
+      - ./ebs-register-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-gateway:
+    image: ebs/app
+    container_name: dhq-gateway
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6850:6850
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-gateway-service:/tomcat
+      - ./ebs-gateway-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-fbssw:
+    image: ebs/app
+    container_name: dhq-fbssw
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6856:6856
+      - 6857:6857
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-fbssw-service:/tomcat
+      - ./ebs-fbssw-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-system:
+    image: ebs/app
+    container_name: dhq-system
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6802:6802
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-system-service:/tomcat
+      - ./ebs-system-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-member:
+    image: ebs/app
+    container_name: dhq-member
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6801:6801
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-member-service:/tomcat
+      - ./ebs-member-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-biz:
+    image: ebs/app
+    container_name: dhq-biz
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6803:6803
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-biz-service:/tomcat
+      - ./ebs-biz-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-opening:
+    image: ebs/app
+    container_name: dhq-opening
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6806:6806
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-opening-service:/tomcat
+      - ./ebs-opening-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-fee:
+    image: ebs/app
+    container_name: dhq-fee
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6807:6807
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-fee-service:/tomcat
+      - ./ebs-fee-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-general:
+    image: ebs/app
+    container_name: dhq-general
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6808:6808
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-general-service:/tomcat
+      - ./ebs-general-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-workflow2:
+    image: ebs/app
+    container_name: dhq-workflow2
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6811:6811
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-workflow2-service:/tomcat
+      - ./ebs-workflow2-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
+  dhq-message:
+    image: ebs/app
+    container_name: dhq-message
+    restart: always
+    #networks:
+    #  - ebsms
+    ports:
+      - 6805:6805
+      - 10001:10001
+      - 10002:10002
+    environment:
+      APP_OPTS: --config.profile=dev --config.uri=http://192.168.110.84:6853 --eureka.uri=http://192.168.110.84:6851/eureka --eureka.instance.ipAddress=192.168.110.84
+      JAVA_OPTS: -Dloader.path=/java/ebs-lib -Duser.timezone=GMT+08 -Xms128m -Xmx512m
+    volumes:
+      - ./ebs-message-service:/tomcat
+      - ./ebs-message-service/tmp:/tmp
+      - ./uploadDir:/java/uploadDir
+      - /etc/localtime:/etc/localtime
+      - /data/ebs-lib:/java/ebs-lib
